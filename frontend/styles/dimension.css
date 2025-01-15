@@ -47,5 +47,6 @@ body>nav .dimension-container {
 }
 body>nav #dimension-number  {
     width: 3em;
+    margin-left: 2px;
     text-align: center;
 }
