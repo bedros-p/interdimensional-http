@@ -3,27 +3,31 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { readFileSync } from 'fs'
 import { Hono } from 'hono'
 import { html, raw } from 'hono/html'
-import { run } from './ai/generateConcept'
+import { run } from './ai/main_ai'
 const app = new Hono()
 
-app.get('/', (c) => {
+app.get('/', async (c) => {
   // Static Render of ../frontend
   const index = readFileSync('../frontend/index.html', 'utf8')
-  // Todo, templates
   const defaultDimension = Math.floor(Math.random() * 9999) + 1
-  // apply
+  const seed = parseInt(c.req.query('dimension')!) ?? defaultDimension
+  const result = run(seed)
+
   const indexWithDimension = index.replace('{{DIMENSION}}', defaultDimension.toString())
-  return c.html(indexWithDimension)
+
+  const concept = await result
+  
+  const navButtons = concept.navbar_items.map((item) => `<button class="navbar-button">${item}</button>`).join('')
+  const indexWithNav = indexWithDimension.replace('{{NAVBUTTONS}}', navButtons)
+
+  return c.html(indexWithNav)
 })
 
 app.use('styles/*.css', serveStatic({ root: '../frontend' }))
 app.use('scripts/*.js', serveStatic({ root: '../frontend' }))
 
 app.get('*', async (c) => {
-  const result = await run()
-  console.log(result)
-  // i PROMISE this used to be a reference to a joke ("uncle funcle") that i left as a PLACEHOLDER!!!! 
-  return c.html(`<h1>family friendly content ${result.title}</h1>`)
+  return c.html(`<h1>------</h1>`)
 })
 
 const port = 3000

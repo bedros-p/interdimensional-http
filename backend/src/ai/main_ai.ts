@@ -55,9 +55,12 @@ const generationConfig = {
     responseSchema: conceptSchema,
 };
 
-export async function run() {
+export async function run(seed: number) {
     const chatSession = model.startChat({
-        generationConfig,
+        generationConfig: {
+            ...generationConfig,
+            seed,
+        },
         history: [
             {
                 role: "user",
