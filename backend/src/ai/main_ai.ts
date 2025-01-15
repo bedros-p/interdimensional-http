@@ -27,7 +27,15 @@ const conceptSchema = {
         navbar_items: {
             type: "array",
             items: {
-                type: "string"
+                type: "object",
+                properties: {
+                    title: {
+                        type: "string"
+                    },
+                    path: {
+                        type: "string"
+                    }
+                }
             }
         }
     },
@@ -39,11 +47,16 @@ const conceptSchema = {
     ]
 }
 
-const zodConceptSchema = z.object({
+const zodNavbarItemSchema = z.object({
+    title: z.string(),
+    path: z.string(),
+});
+
+export const zodConceptSchema = z.object({
     title: z.string(),
     concept: z.string(),
     accentColor: z.string(),
-    navbar_items: z.array(z.string()),
+    navbar_items: z.array(zodNavbarItemSchema),
 });
 
 const generationConfig = {
@@ -51,8 +64,6 @@ const generationConfig = {
     topP: 0.95,
     topK: 60,
     maxOutputTokens: 8192,
-    responseMimeType: "application/json",
-    responseSchema: conceptSchema,
 };
 
 export async function run(seed: number) {
@@ -60,6 +71,8 @@ export async function run(seed: number) {
         generationConfig: {
             ...generationConfig,
             seed,
+            responseMimeType: "application/json",
+            responseSchema: conceptSchema,
         },
         history: [
             {
@@ -83,4 +96,24 @@ export async function run(seed: number) {
         console.error(error);
         throw error;
     }
+}
+
+export async function generateHTML(concept: z.infer<typeof zodConceptSchema>, dimension: number, path: string) {
+    const chatSession = model.startChat({
+        generationConfig: {
+            ...generationConfig,
+            seed: dimension,
+        },
+        history: [
+            {
+                role: "user",
+                parts: [
+                    { text: JSON.stringify({title: concept.title, concept: concept.concept, accentColor: concept.accentColor}) },
+                    { text: `write (*styled*) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already.` },
+                ],
+            },
+        ],
+    })
+    const result = await chatSession.sendMessage("\n");
+    return result.response.text();
 }
