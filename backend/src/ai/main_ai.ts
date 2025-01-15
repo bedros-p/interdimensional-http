@@ -79,7 +79,7 @@ export async function run(seed: number) {
                 role: "user",
                 parts: [
                     { text: "site idea with online capabilities" },
-                    { text: "something crazy, insane, beautiful, never seen before, almost futuristic\n\nthe general theme requires posting in some way, whether it be reviews, text, status, forum post, anything (dont come up with an idea that involves photos though)\n\nsome spitball ideas, do NOT reuse it, just sharing for the concept.\n- email client\n- code sharing site\n- Show fansites for shows that dont exist -> but absurd, eg the 3 Shrooms\n- ecommerce for products that dont exist -> but absurd, eg GlarpShaplir, the best way to glarsh the streeps right out\n" },
+                    { text: "something crazy, insane, beautiful, never seen before, almost futuristic\n\nthe general theme requires posting in some way, whether it be reviews, text, status, forum post, anything (dont come up with an idea that involves photos or media though. text only ideas)\n\nsome spitball ideas, do NOT reuse it, just sharing for the concept.\n- email client\n- code sharing site\n- Show fansites for shows that dont exist -> but absurd, eg the 3 Shrooms\n- ecommerce for products that dont exist -> but absurd, eg GlarpShaplir, the best way to glarsh the streeps right out\n" },
                     { text: "pure unhinged insanity" },
                 ],
             },
@@ -99,7 +99,11 @@ export async function run(seed: number) {
 }
 
 export async function generateHTML(concept: z.infer<typeof zodConceptSchema>, dimension: number, path: string) {
-    const chatSession = model.startChat({
+    const model_html = genAI.getGenerativeModel({
+        model: "gemini-1.5-pro",
+    });
+    
+    const chatSession = model_html.startChat({
         generationConfig: {
             ...generationConfig,
             seed: dimension,
