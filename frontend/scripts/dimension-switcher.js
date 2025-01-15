@@ -20,3 +20,4 @@ async function rerender() {
     document.body.removeAttribute("disabled");
 }
 
+window.dimension.updater(0)

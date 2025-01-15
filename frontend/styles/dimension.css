@@ -3,18 +3,18 @@ body>nav #dimension {
     flex-direction: row;
     margin-inline: 2px;
     font-size: 1.2rem;
+    margin-left:  1.5em;
     align-items: center;
     justify-content: center;
 }
 body>nav .dimension-button {
     transition: all .1s ease-in-out;
     background-color: transparent;
-    color: black;
+    
     border: none;
     padding: 0;
     cursor: pointer;
-    margin: 2px;
-    padding: 2px;
+    padding-inline: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,8 +24,8 @@ body>nav .dimension-button:focus {
     outline: none;
 }
 
-body>nav .dimension-button:hover {
-    color: #b1b1b1;
+body>nav .dimension-button:hover *{
+    color: #bdb3b3 !important;
 }
 body>nav .dimension-switcher {
     display: flex;
@@ -33,9 +33,17 @@ body>nav .dimension-switcher {
     align-items: center;
     justify-content: center;
 }
+body>nav .dimension-container, body>nav .dimension-container * {
+    color: rgb(233, 226, 226);
+}
 body>nav .dimension-container {
     display: flex;
     font-family: 'Courier New', Courier, monospace;
+    border: 1px solid rgb(15, 15, 15);
+    border-radius: 10px;
+    width: min-content;
+    padding: 2px;
+    padding-block: 1em;
 }
 body>nav #dimension-number  {
     width: 3em;

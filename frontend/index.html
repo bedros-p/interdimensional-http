@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interdimensional Cable</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="styles/dimension.css">
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/styles/dimension.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+    <script defer src="/scripts/dimension-switcher.js"></script>
+    <script defer src="/scripts/dimension-buttons.js"></script>
     <script>
         window.dimension = {
-            current: 1,
+            current: parseInt("{{DIMENSION}}"),
             updater: (dimensionDelta) => {}
         }
     </script>
-    <script src="scripts/dimension-switcher.js"></script>
-    <script defer src="scripts/dimension-buttons.js"></script>
 </head>
 <body>
     <nav>
         <div class="dimension-container">
-            <span id="dimension">DIMENSION <span id="dimension-number">1</span></span>
+            <span id="dimension">DIMENSION <span id="dimension-number">0</span></span>
             <div class="dimension-switcher">
                 <button class="dimension-button" id="dimension-up">
                     <svg height="25" width="25" viewBox="0 0 450 250">
@@ -33,6 +33,14 @@
                     </svg>
                 </button>
             </div>
+        </div>
+
+        <!-- Navbar -->  
+        
+        <div class="navbar">
+            <button class="navbar-button">Home</button>
+            <button class="navbar-button">About</button>
+            <button class="navbar-button">Contact</button>
         </div>
         <!-- Populate with AI -->
 

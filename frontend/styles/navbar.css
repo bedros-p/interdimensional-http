@@ -1,0 +1,39 @@
+body>nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+body>nav>div {
+    background-color: rgb(15, 14, 14);
+}
+
+body>nav .navbar {
+    gap: 1em;
+    display: flex;
+    width: 100%;
+    max-width: 40vw;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+body>nav .navbar-button {
+    background-color: transparent;
+    border: none;
+    color: rgb(233, 226, 226);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    width: 100%;
+    padding-block: 1em;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+body>nav .navbar-button:hover {
+    background-color: rgb(36, 34, 34);
+    box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
