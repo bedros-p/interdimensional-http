@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interdimensional Cable</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/dimension.css">
+    <script src="index.js"></script>
+    <script>
+        window.dimension = {
+            current: 1,
+            updater: (dimensionDelta) => {}
+        }
+    </script>
+    <script src="scripts/dimension-switcher.js"></script>
+    <script defer src="scripts/dimension-buttons.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="dimension-container">
+            <span id="dimension">DIMENSION <span id="dimension-number">1</span></span>
+            <div class="dimension-switcher">
+                <button class="dimension-button" id="dimension-up">
+                    <svg height="25" width="25" viewBox="0 0 450 250">
+                        <polygon points="225,10 100,210 350,210" style="fill:currentColor;stroke:currentColor;stroke-width:30" />
+                    </svg>
+                </button>
+                <!-- It's redundant but small clicks finally register -->
+                <button class="dimension-button" id="dimension-down">
+                    <svg height="25" width="25" viewBox="0 0 450 250" style="transform: rotate(180deg);">
+                        <polygon points="225,10 100,210 350,210" style="fill:currentColor;stroke:currentColor;stroke-width:30" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Populate with AI -->
+
+    </nav>
+    <main>
+        <!-- Populate with AI -->
+    </main>
+</body>
+</html>
