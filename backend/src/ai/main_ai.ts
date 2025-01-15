@@ -109,7 +109,7 @@ export async function generateHTML(concept: z.infer<typeof zodConceptSchema>, di
                 role: "user",
                 parts: [
                     { text: JSON.stringify({title: concept.title, concept: concept.concept, accentColor: concept.accentColor}) },
-                    { text: `write (*styled*) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already.` },
+                    { text: `write (*styled*) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already. Use style tags and style the body tag as well. The page should feature some sort of form>input / form>button to send data to an API. No \`\`\`html, return in plaintext.` },
                 ],
             },
         ],
