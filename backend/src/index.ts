@@ -3,6 +3,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { readFileSync } from 'fs'
 import { Hono } from 'hono'
 import { html, raw } from 'hono/html'
+import { run } from './ai/generateConcept'
 const app = new Hono()
 
 app.get('/', (c) => {
@@ -18,8 +19,11 @@ app.get('/', (c) => {
 app.use('styles/*.css', serveStatic({ root: '../frontend' }))
 app.use('scripts/*.js', serveStatic({ root: '../frontend' }))
 
-app.get('*', (c) => {
-  return c.html('<h1>Fuckle</h1>')
+app.get('*', async (c) => {
+  const result = await run()
+  console.log(result)
+  // i PROMISE this used to be a reference to a joke ("uncle funcle") that i left as a PLACEHOLDER!!!! 
+  return c.html(`<h1>family friendly content ${result.title}</h1>`)
 })
 
 const port = 3000
