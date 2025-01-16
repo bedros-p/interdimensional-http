@@ -19,7 +19,7 @@ async function generateConceptAndRender(c: any, seed: number) {
 
   const concept = await result
   
-  const navButtons = concept.navbar_items.map((item) => `<button class="navbar-button" onclick="renderPage('${item.path}')">${item.title}</button>`).join('')
+  const navButtons = concept.navbar_items.map((item) => `<button class="interdimensional-navbar-button" onclick="renderPage('${item.path}')">${item.title}</button>`).join('')
   const indexWithNav = indexWithDimension.replace('{{NAVBUTTONS}}', navButtons)
   setCookie(c, 'concept', b64encode(JSON.stringify(concept)))
   
@@ -85,7 +85,7 @@ app.use('*', async (c) => {
     const html = await generateHTML(concept, parseInt(c.req.query('dimension')!), c.req.path)
     const index = readFileSync('../frontend/index.html', 'utf8')
     
-    const navButtons = concept.navbar_items.map((item) => `<button class="navbar-button" onclick="renderPage('${item.path}')">${item.title}</button>`).join('')
+    const navButtons = concept.navbar_items.map((item) => `<button class="interdimensional-navbar-button" onclick="renderPage('${item.path}')">${item.title}</button>`).join('')
     const indexWithNav = index.replace('{{NAVBUTTONS}}', navButtons)
     const indexWithNavAndContent = indexWithNav.replace('{{CONTENT}}', html ?? errorMessage)
     return c.html(indexWithNavAndContent)
