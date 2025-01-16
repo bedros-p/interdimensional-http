@@ -9,7 +9,7 @@ body>nav>div {
     background-color: rgb(15, 14, 14);
 }
 
-body>nav .navbar {
+body>nav .interdimensional-navbar {
     gap: 1em;
     display: flex;
     width: 100%;
@@ -20,7 +20,7 @@ body>nav .navbar {
     justify-content: space-around;
 }
 
-body>nav .navbar-button {
+body>nav .interdimensional-navbar-button {
     background-color: transparent;
     border: none;
     color: rgb(233, 226, 226);
@@ -33,7 +33,7 @@ body>nav .navbar-button {
     cursor: pointer;
 }
 
-body>nav .navbar-button:hover {
+body>nav .interdimensional-navbar-button:hover {
     background-color: rgb(36, 34, 34);
     box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }

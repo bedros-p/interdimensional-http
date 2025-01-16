@@ -8,6 +8,8 @@ import { generateHTML, run, zodConceptSchema } from './ai/main_ai'
 import { z } from 'zod'
 const app = new Hono()
 
+const errorMessage = "<h1>the interdimensional internet messed up. web7 is unreliable. try again :)</h1>"
+
 async function generateConceptAndRender(c: any, seed: number) {
   const index = readFileSync('../frontend/index.html', 'utf8')
   const defaultDimension = seed
@@ -22,7 +24,7 @@ async function generateConceptAndRender(c: any, seed: number) {
   setCookie(c, 'concept', b64encode(JSON.stringify(concept)))
   
   const content = await generateHTML(concept, defaultDimension, '/')
-  const indexWithNavAndContent = indexWithNav.replace('{{CONTENT}}', content)
+  const indexWithNavAndContent = indexWithNav.replace('{{CONTENT}}', content ?? errorMessage)
   return indexWithNavAndContent
 }
 
@@ -62,7 +64,7 @@ app.use('*', async (c) => {
     const dimension = parseInt(c.req.header('x-dimension')!)
     const concept = zodConceptSchema.parse(JSON.parse(b64decode(getCookie(c, 'concept')!)))
     const html = await generateHTML(concept, dimension, c.req.path)
-    return c.html(html)
+    return c.html(html ?? errorMessage)
   }
   if (!getCookie(c, 'concept')) {
     const defaultDimension = Math.floor(Math.random() * 9999) + 1
@@ -85,7 +87,7 @@ app.use('*', async (c) => {
     
     const navButtons = concept.navbar_items.map((item) => `<button class="navbar-button" onclick="renderPage('${item.path}')">${item.title}</button>`).join('')
     const indexWithNav = index.replace('{{NAVBUTTONS}}', navButtons)
-    const indexWithNavAndContent = indexWithNav.replace('{{CONTENT}}', html)
+    const indexWithNavAndContent = indexWithNav.replace('{{CONTENT}}', html ?? errorMessage)
     return c.html(indexWithNavAndContent)
   }
 })

@@ -3,15 +3,16 @@ const {
     HarmCategory,
     HarmBlockThreshold,
 } = require("@google/generative-ai");
+import Groq from 'groq-sdk';
 
 import { z } from "zod";
 
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
-
-const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+const client = new Groq({
+    apiKey: process.env['GROQ_API_KEY'],
 });
+
 const conceptSchema = {
     type: "object",
     properties: {
@@ -67,6 +68,11 @@ const generationConfig = {
 };
 
 export async function run(seed: number) {
+
+    const model = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+    });
+    
     const chatSession = model.startChat({
         generationConfig: {
             ...generationConfig,
@@ -99,25 +105,15 @@ export async function run(seed: number) {
 }
 
 export async function generateHTML(concept: z.infer<typeof zodConceptSchema>, dimension: number, path: string) {
-    const model_html = genAI.getGenerativeModel({
-        model: "gemini-1.5-pro",
-    });
-    
-    const chatSession = model_html.startChat({
-        generationConfig: {
-            ...generationConfig,
-            seed: dimension,
-        },
-        history: [
-            {
-                role: "user",
-                parts: [
-                    { text: JSON.stringify({title: concept.title, concept: concept.concept, accentColor: concept.accentColor}) },
-                    { text: `write (*styled*) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already. Use style tags and style the body tag as well. The page should feature some sort of form>input / form>button to send data to an API. No \`\`\`html, return in plaintext.` },
-                ],
-            },
+    const model_groq = "mixtral-8x7b-32768"
+    console.log("Generating HTML");
+    const { navbar_items, ...concept_trimmed } = concept;
+    const result = await client.chat.completions.create({
+        model: model_groq,
+        messages : [
+            { role: "user", content: JSON.stringify(concept_trimmed) },
+            { role: "user", content: `write (*styled* [sleek, modern, minimalistic, futuristic - you can use bootstrap, it's all bundled in]) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already. Use style tags and style the body tag as well. The page, if not on / or if it really has API interaction, should feature some sort of form>input / form>button to send data to an API. No \`\`\`html, return in plaintext.` },
         ],
-    })
-    const result = await chatSession.sendMessage("\n");
-    return result.response.text();
+    });
+    return result.choices[0].message.content;
 }
