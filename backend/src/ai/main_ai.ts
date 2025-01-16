@@ -72,7 +72,7 @@ export async function run(seed: number) {
     const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
     });
-    
+
     const chatSession = model.startChat({
         generationConfig: {
             ...generationConfig,
@@ -85,8 +85,10 @@ export async function run(seed: number) {
                 role: "user",
                 parts: [
                     { text: "site idea with online capabilities" },
-                    { text: "something crazy, insane, beautiful, never seen before, almost futuristic\n\nthe general theme requires posting in some way, whether it be reviews, text, status, forum post, anything (dont come up with an idea that involves photos or media though. text only ideas)\n\nsome spitball ideas, do NOT reuse it, just sharing for the concept.\n- email client\n- code sharing site\n- Show fansites for shows that dont exist -> but absurd, eg the 3 Shrooms\n- ecommerce for products that dont exist -> but absurd, eg GlarpShaplir, the best way to glarsh the streeps right out\n" },
+                    { text: "something crazy, insane, beautiful, never seen before, almost futuristic\n\nthe general theme involves posting in some way, whether it be reviews, text, status, forum post, anything (dont come up with an idea that involves photos or media though. text only ideas)\n\nsome spitball ideas, do NOT reuse it, just sharing for the concept.\n- email client\n- code sharing site\n- Show fansites for shows that dont exist -> but absurd, eg the 3 Shrooms\n- ecommerce for products that dont exist -> but absurd, eg GlarpShaplir, the best way to glarsh the streeps right out\n" },
                     { text: "pure unhinged insanity" },
+                    { text: "dont suggest sites that suggest uncreated things. these topics are absurd, but it's deadpan humor. e.g Carcinogenic Shrooms, the best way to glarsh the streeps right out" },
+                    { text: "a recipe site for a specific recipe that doesnt exist, a code editor site for a specific code language that doesnt exist"}
                 ],
             },
         ],
@@ -112,7 +114,7 @@ export async function generateHTML(concept: z.infer<typeof zodConceptSchema>, di
         model: model_groq,
         messages : [
             { role: "user", content: JSON.stringify(concept_trimmed) },
-            { role: "user", content: `write (*styled* [sleek, modern, minimalistic, futuristic - you can use bootstrap, it's all bundled in]) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already. Use style tags and style the body tag as well. The page, if not on / or if it really has API interaction, should feature some sort of form>input / form>button to send data to an API. No \`\`\`html, return in plaintext.` },
+            { role: "user", content: `write (*styled* [sleek, modern, minimalistic, futuristic - you can use bootstrap, it's all bundled in. site gotta be in dark mode though] - your view is in the "body>main" tag. do not modify width & height of body.) HTML for the page located at "${path}". Make up whatever API endpoint you need if using any. You are inside the body tag already. Use style tags and style the body tag as well. The page, if not on / or if it really has API interaction, should feature some sort of form>input / form>button to send data to an API. No \`\`\`html, return in plaintext.` },
         ],
     });
     return result.choices[0].message.content;
