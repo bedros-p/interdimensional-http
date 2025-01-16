@@ -8,11 +8,11 @@ window.dimension.updater = (dimensionDelta) => {
 }
 
 async function rerender() {
-    const main = document.getElementsByTagName("main")[0];
+    const main = document.querySelector("body>main");
     const dimensionFetch = fetch(`/?dimension=${window.dimension.current}`)
     document.body.setAttribute("disabled", "true");
     try {
-        const dimensionText = await dimensionFetch.text();
+        const dimensionText = await (await dimensionFetch).text();
         main.innerHTML = dimensionText;
     } catch (error) {
         // console.error(error);
