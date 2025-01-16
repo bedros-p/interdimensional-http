@@ -42,11 +42,36 @@ app.get('/', async (c) => {
 app.use('styles/*.css', serveStatic({ root: '../frontend' }))
 app.use('scripts/*.js', serveStatic({ root: '../frontend' }))
 
-app.get('*', async (c) => {
+app.use('*', async (c) => {
+  // I hate this behemoth of a function
+  // TODO: split this up & do it right
+  if (c.req.path.startsWith('/api/')) {
+    if (c.req.method == 'GET') {
+      // TODO: semantic search magic
+
+    } else if (c.req.method == 'POST') {
+      const body = await c.req.json()
+      console.log(body)
+      // TODO: push to vector db for semantic search
+      return c.json({
+        message: 'Hello, world!'
+      })
+    }
+  }
+  if (c.req.header('x-dimension')) {
+    const dimension = parseInt(c.req.header('x-dimension')!)
+    const concept = zodConceptSchema.parse(JSON.parse(b64decode(getCookie(c, 'concept')!)))
+    const html = await generateHTML(concept, dimension, c.req.path)
+    return c.html(html)
+  }
   if (!getCookie(c, 'concept')) {
     const defaultDimension = Math.floor(Math.random() * 9999) + 1
     let seed = parseInt(c.req.query('dimension')!)
     if (isNaN(seed)) seed = defaultDimension
+    if (c.req.path == '/') {
+      const rendered = await generateConceptAndRender(c, seed)
+      return c.html(rendered)
+    } 
     const rendered = await generateConceptAndRender(c, seed)
   
     return c.html(rendered)

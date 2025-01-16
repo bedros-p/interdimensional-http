@@ -1,52 +1,52 @@
 body>nav #dimension {
-    display: flex;
-    flex-direction: row;
-    margin-inline: 2px;
-    font-size: 1.2rem;
-    margin-left:  1.5em;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    flex-direction: row !important;
+    margin-inline: 2px !important;
+    font-size: 1.2rem !important;
+    margin-left:  1.5em !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 body>nav .dimension-button {
     transition: all .1s ease-in-out;
-    background-color: transparent;
+    background-color: transparent !important;
     
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    padding-inline: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    padding-inline: 1em !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 body>nav .dimension-button:focus {
-    outline: none;
+    outline: none !important;
 }
 
 body>nav .dimension-button:hover *{
     color: #bdb3b3 !important;
 }
 body>nav .dimension-switcher {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 body>nav .dimension-container, body>nav .dimension-container * {
     color: rgb(233, 226, 226);
 }
 body>nav .dimension-container {
-    display: flex;
-    font-family: 'Courier New', Courier, monospace;
-    border: 1px solid rgb(15, 15, 15);
-    border-radius: 10px;
-    width: min-content;
-    padding: 2px;
-    padding-block: 1em;
+    display: flex !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    border: 1px solid rgb(15, 15, 15) !important;
+    border-radius: 10px !important;
+    width: min-content !important;
+    padding: 2px !important;
+    padding-block: 1em !important;
 }
 body>nav #dimension-number  {
-    width: 3em;
-    margin-left: 2px;
-    text-align: center;
+    width: 3em !important;
+    margin-left: 2px !important;
+    text-align: center !important;
 }
