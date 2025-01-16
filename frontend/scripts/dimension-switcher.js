@@ -9,7 +9,7 @@ window.dimension.updater = (dimensionDelta) => {
 
 async function rerender() {
     const main = document.querySelector("body>main");
-    const dimensionFetch = fetch(`/?dimension=${window.dimension.current}`)
+    const dimensionFetch = fetch(`/?dimension=${window.dimension.current}&embed=1`)
     document.body.setAttribute("disabled", "true");
     try {
         const dimensionText = await (await dimensionFetch).text();

@@ -31,15 +31,15 @@ async function generateConceptAndRender(c: any, seed: number) {
 
 function b64encode(str: string) { return Buffer.from(str, 'utf8').toString('base64')}
 function b64decode(str: string) { return Buffer.from(str, 'base64').toString('utf8')}
-app.get('/', async (c) => {
-  // Static Render of ../frontend
-  const defaultDimension = Math.floor(Math.random() * 9999) + 1
-  let seed = parseInt(c.req.query('dimension')!)
-  if (isNaN(seed)) seed = defaultDimension
-  const rendered = await generateConceptAndRender(c, seed)
+// app.get('/', async (c) => {
+//   // Static Render of ../frontend
+//   const defaultDimension = Math.floor(Math.random() * 9999) + 1
+//   let seed = parseInt(c.req.query('dimension')!)
+//   if (isNaN(seed)) seed = defaultDimension
+//   const rendered = await generateConceptAndRender(c, seed)
 
-  return c.html(rendered)
-})
+//   return c.html(rendered)
+// })
 
 app.use('styles/*.css', serveStatic({ root: '../frontend' }))
 app.use('scripts/*.js', serveStatic({ root: '../frontend' }))
@@ -60,8 +60,9 @@ app.use('*', async (c) => {
       })
     }
   }
-  if (c.req.header('x-dimension')) {
-    const dimension = parseInt(c.req.header('x-dimension')!)
+  console.log("dimension", c.req.query('dimension'))
+  if (c.req.query('embed')) {
+    const dimension = parseInt(c.req.query('embed')!)
     const concept = zodConceptSchema.parse(JSON.parse(b64decode(getCookie(c, 'concept')!)))
     const html = await generateHTML(concept, dimension, c.req.path)
     return c.html(html ?? errorMessage)
