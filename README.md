@@ -1,6 +1,16 @@
 # interdimensional-http
 If a website could be a multiplayer dream
 
+# Try it out
+Go to the backend folder and run the dev script after setting env variables
+- `export GEMINI_API_KEY=your-gemini-api-key`
+- `export GROQ_API_KEY=your-groq-api-key`
+^ For now - this will be simplified in the future with a .env file
+
+- `bun run dev` / `npm run dev`
+
+Then navigate to `http://localhost:3000/` and enjoy the show
+
 # what
 hallucinate a website in a way that supports backend magic
 
